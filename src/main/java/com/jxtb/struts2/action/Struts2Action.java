@@ -1,5 +1,6 @@
 package com.jxtb.struts2.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import net.sf.json.JSONArray;
 import org.apache.commons.collections.map.HashedMap;
@@ -22,13 +23,20 @@ import java.util.Map;
 @Namespace("/")
 public class Struts2Action  extends ActionSupport {
 
-    @Action(value="/helloStruts2",results = {@Result(name="success",location="helloJsp.jsp")})
+    /**
+     * /WEB-INF/content/helloJsp.jsp
+     * @return
+     * @throws IOException
+     */
+    //http://localhost:8080/helloStruts2.action
+    @Action(value="/helloStruts2",results = {@Result(name="success",location="helloStruts2.jsp")})
     public String helloStruts2() throws IOException {
-        Map<String, Object> map=new HashedMap();
-        map.put("hello", "jxtb");
+        ActionContext context= ActionContext.getContext();
+        context.put("hello", "jxtb");
         return SUCCESS;
     }
 
+    //http://localhost:8080/query.action
     @Action(value="/query")
     public String query() throws IOException {
         HttpServletRequest request = ServletActionContext.getRequest();
